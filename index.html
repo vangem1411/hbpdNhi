@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chúc mừng sinh nhật Ngọc Nhi!</title>
+    <style>
+      body {
+        margin: 0;
+        background: #000;
+        color: #fff;
+        font-family: 'Arial', sans-serif;
+        text-align: center;
+        padding: 30px;
+        overflow-x: hidden;
+      }
+
+      .content {
+        position: relative;
+        z-index: 10;
+      }
+
+      h1 {
+        font-size: 3em;
+        margin-bottom: 10px;
+        color: #ffccff;
+        text-shadow: 2px 2px 4px #ff66cc;
+      }
+
+      .avatar {
+        width: 220px;
+        border-radius: 50%;
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+        margin: 20px auto;
+        display: block;
+        border: 4px solid #ffb6c1;
+      }
+
+      .cake-gif {
+        width: 250px;
+        margin: 30px 0 10px;
+        border-radius: 15px;
+        box-shadow: 0 0 25px rgba(255, 192, 203, 0.6);
+      }
+
+      .bottom-wish {
+        font-size: 1.4em;
+        color: #ffe6f2;
+        background: rgba(255, 192, 203, 0.08);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+        max-width: 700px;
+        margin: 30px auto;
+        line-height: 1.6;
+        border: 1px dashed #ffb6c1;
+      }
+
+      video {
+        margin-top: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+      }
+
+      canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        background: transparent !important;
+      }
+
+      .footer {
+        margin-top: 40px;
+        font-size: 1em;
+        color: #ccc;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <h1>🎉 Chúc mừng sinh nhật Ngọc Nhi</h1>
+
+      <!-- Ảnh -->
+      <img
+        class="avatar"
+        src="499155462_4035812066636757_7930291645209681843_n.jpg"
+        alt="Ảnh Ngọc Nhi"
+      />
+
+      <!-- Bánh sinh nhật -->
+      <img
+        class="cake-gif"
+        src="https://tse3.mm.bing.net/th/id/OIP.iZukZHh3XvpXpTytefkOsQHaHa?pid=Api"
+        alt="Bánh sinh nhật xinh xắn"
+      />
+
+      <!-- Lời chúc -->
+      <div class="bottom-wish">
+        💌
+        <strong
+          >Chúc Bà tuổi mới luôn rực rỡ như ánh mặt trời, tỏa sáng như vì sao và ngọt ngào như chiếc
+          bánh kem này nhé!</strong
+        >
+        💫🎂
+      </div>
+
+      <!-- Video -->
+      <video width="600" controls autoplay loop>
+        <source src="NHI.mp4" type="video/mp4" />
+        Trình duyệt của bạn không hỗ trợ video.
+      </video>
+
+      <div class="footer">
+        🌟 Tuổi mới không được già thêm, chỉ được xịn hơn và... bớt lầy chút thôi nhé!💖
+      </div>
+    </div>
+
+    <!-- Pháo hoa -->
+    <canvas id="fireworks"></canvas>
+
+    <script>
+      const canvas = document.getElementById('fireworks');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+
+      function createFirework() {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height * 0.5;
+
+        const count = 60;
+        const speed = 3 + Math.random() * 2;
+        const hue = Math.floor(Math.random() * 360);
+
+        for (let i = 0; i < count; i++) {
+          const angle = (Math.PI * 2 * i) / count;
+          particles.push({
+            x,
+            y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            alpha: 1,
+            radius: 2 + Math.random() * 2,
+            color: `hsl(${hue + Math.random() * 20}, 100%, 70%)`,
+          });
+        }
+      }
+
+      function animate() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach((p, i) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.alpha -= 0.008;
+
+          if (p.alpha <= 0) {
+            particles.splice(i, 1);
+          } else {
+            ctx.globalAlpha = p.alpha;
+            ctx.beginPath();
+            ctx.fillStyle = p.color;
+            ctx.shadowColor = p.color;
+            ctx.shadowBlur = 15;
+            ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+          }
+        });
+
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(animate);
+      }
+
+      setInterval(createFirework, 1200);
+      animate();
+    </script>
+  </body>
+</html>
